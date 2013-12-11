@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>mordrek-util</title>
+
+	<!-- Importing x-tag -->
+	<script src="x-tag-components.min.js"></script>
+	
+	<!-- Importing Custom Elements -->
+	<link rel="import" href="src/text-translate.html">
+</head>
+<body>
+	<h1> Localization using &lt;text-translate&gt;</h1>
+	<!-- Declaring dictionary (unless loading from URL) -->
+	<script>
+	lang_en = 
+		{
+			"title"				:"Hello world",
+			"welcome_message" 	: "Welcome"
+		}
+	lang_sv = 
+		{
+			"title"				:"Hej värld",
+			"welcome_message" 	: "Välkommen"
+		}
+	
+	</script>
+
+	<!-- Using Custom Elements -->
+	<text-translate id='intro' dictionary="lang_en">
+			<h1><span>title</span></h1>
+			<span>welcome_message</span>
+			<span>text without valid key</span>
+	</text-translate>
+	<br/><br/><br/>
+	<button onclick="intro.dictionary='lang_sv';">Click for swedish</button>
+	<button onclick="intro.dictionary='lang_en';">Click for english</button>
+</body>
+</html>

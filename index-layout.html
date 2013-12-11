@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>mordrek-layout</title>
+
+	<!-- Importing x-tag -->
+	<script src="x-tag-components.min.js"></script>
+
+	<!-- Importing Custom Elements -->
+	<link rel="import" href="src/mordrek-layout.html" />
+	
+	<!-- flair -->
+	<style>html,body { height: 100%; margin: 0px; padding: 0px; }</style>
+</head>
+<body style='margin:30px;height:100%;'>
+	<!-- Using it... -->
+
+	<!-- DockPanel -->
+	<h1>&lt;dock-panel&gt;</h1>
+	<h2>Docking Top, Left, Bottom, Right, Fill</h2>
+	<dock-panel style="width:25%;height:25%;background-color:grey;" >
+		<dock-panel dock="top" 		size="80px" 	style="background-color:#ff0000;">		Top</dock-panel>
+		<dock-panel dock="left" 	size="80px"		style="background-color:#ff4400;">	Left</dock-panel>
+		<dock-panel dock="bottom" 	size="20%"		style="background-color:#ff8800;">	Bottom</dock-panel>
+		<dock-panel dock="right" 	size="20%"		style="background-color:#ffbb00;">		Right</dock-panel>
+		<dock-panel dock="fill" 					style="background-color:#ffdd00;">	Fill</dock-panel>
+		
+	</dock-panel>
+	<h2>Docking Top, Left, Bottom, Right, Fill, with the same procedure inside the fill</h2>
+	<dock-panel style="width:45%;height:40%;background-color:grey;" >
+		<dock-panel dock="top" 		size="80px" 	style="background-color:#ff0000;">		Top</dock-panel>
+		<dock-panel dock="left" 	size="80px"		style="background-color:#ff4400;">	Left</dock-panel>
+		<dock-panel dock="bottom" 	size="20%"		style="background-color:#ff8800;">	Bottom</dock-panel>
+		<dock-panel dock="right" 	size="20%"		style="background-color:#ffbb00;">		Right</dock-panel>
+		<dock-panel dock="fill" 					style="background-color:#ffdd00;">	
+		
+			<dock-panel dock="top" 		size="80px" 	style="background-color:#0000ff;">	a	</dock-panel>
+			<dock-panel dock="left" 	size="80px"		style="background-color:#0044ff;">s	</dock-panel>
+			<dock-panel dock="bottom" 	size="20%"		style="background-color:#0088ff;">	d</dock-panel>
+			<dock-panel dock="right" 	size="20%"		style="background-color:#00bbff;">	f	</dock-panel>
+			<dock-panel dock="fill" 					style="background-color:#00ddff;">g	</dock-panel>
+				
+		</dock-panel>
+	</dock-panel>
+</body>
+</html>
