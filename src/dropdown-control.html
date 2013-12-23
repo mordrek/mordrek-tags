@@ -1,0 +1,83 @@
+<script>
+xtag.register('dropdown-control', 
+	{
+	extends: 'div',
+	accessors:
+		{
+		data : { attribute: {}},
+		onchange : { attribute: {}}
+		},
+	lifecycle: 
+		{
+		created: function()
+			{
+				this.innerHTML = "<select>"+this.innerHTML+"</select>";
+				this.data = this.data || null;
+				this.onchange = this.onchange || null;
+				
+				if(this.data)
+					this.update();
+			},
+		attributeChanged: function()
+			{
+				this.update();
+			}
+		},
+	getters:
+		{
+			'value' : function()
+			{
+				var l=this.querySelectorAll('select');
+				for(var i=0; i < l.length;i++)
+					return l[i].value;
+			}
+		},
+	methods:
+		{
+		doonchange : function()
+			{
+			if(this.parentNode._change)
+				{
+				this.parentNode.value = this.value;
+				this.parentNode._change();
+				}
+			else alert(this.parentNode._change);
+			},
+		update: function()
+			{
+			this._change = this.onchange;
+			if(this.data == null)
+				return;
+			var d = this.data;
+			if(typeof d === 'string')
+				d = eval(d);
+
+			var s = "<select ";
+			s = s+">";
+			var index=0;
+			for(var i =0; i < d.length; i++)
+				{
+					var di = d[i]; 
+					s = s+"<option ";
+					if(di.selected)
+					   {
+					   s = s+"selected";
+					   index = i;
+					   }
+					s = s+" value='"+
+						di.value.replace(/'/g, "\'")+"'>"+di.name+"</option>";
+				}
+			s = s+"</select>";
+			this.innerHTML = s;
+			var l=this.querySelectorAll('select');
+			for(var i=0; i < l.length;i++)
+				{
+				l[i].onchange = this.doonchange;
+				l[i].selectedIndex = index;
+				}
+			}
+		}
+	});
+
+
+</script>

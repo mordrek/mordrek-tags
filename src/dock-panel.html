@@ -13,7 +13,8 @@ xtag.register('dock-panel',
 			{
 				var s = this.style;
 				s.position=s.position||"relative";
-				
+				s.height=s.height||"100%";
+				s.display=s.display||"block";
 				var p = this.parentNode;
 				if(p!=null&&p.tagName!="DOCK-PANEL") 
 				{
@@ -28,8 +29,6 @@ xtag.register('dock-panel',
 						t.updateRoot();
 					}, true);	
 					}	
-					this.style.display='block';
-					this.style.position='relative';
 					this.updateRoot();
 				}
 				else
@@ -53,7 +52,7 @@ xtag.register('dock-panel',
 		updateAll : function(root)
 			{
 				var t=this;
-				if(!root) t.update();
+				t.update();
 				if(t._docks!=null)
 				{
 					t._box = []; 
@@ -61,7 +60,7 @@ xtag.register('dock-panel',
 					t._box.y = 0;
 					t._box.w = t.offsetWidth;
 					t._box.h = t.offsetHeight;
-					console.log("Base: "+t._box.w+", "+t._box.h);
+					
 					for(var i=0; i < t._docks.length;i++)
 					{
 						t._docks[i].updateAll(false);
@@ -70,6 +69,7 @@ xtag.register('dock-panel',
 			},
 			update : function ()
 			{
+			    if(this.dock==null) return;
 				var p = this.parentNode;
 				var box = p._box; 
 				var bx = box.x;

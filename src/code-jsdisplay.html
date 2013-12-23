@@ -1,0 +1,29 @@
+<script>
+xtag.register('code-jsdisplay', 
+	{
+	extends: 'table',
+	accessors:
+		{
+			code : { attribute: {}},
+		},
+	methods:
+		{
+
+		},
+	lifecycle: 
+		{
+		created: function()
+			{
+				this.code = this.code || this.innerHTML;
+			},
+		attributeChanged: function()
+			{
+				var c = this.code.replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;").replace(/\n/g, "<br />");
+				this.innerHTML = "<table style='width:100%;'><tr><th>Code</th><th>Result</th></tr><tr><td style='max-width:50%; width:50%;'><pre><code>"+c+"</code></pre></td><td>"+this.code+"</td></tr></table>";
+				 
+			}
+		}
+	});
+
+
+</script>

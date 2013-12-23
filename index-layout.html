@@ -11,22 +11,46 @@
 	<link rel="import" href="src/mordrek-layout.html" />
 	
 	<!-- flair -->
-	<style>html,body { height: 100%; margin: 0px; padding: 0px; }</style>
+	<link rel="import" href="src/dropdown-control.html" />
+	<link rel="import" href="src/code-control.html" />
+	<link rel="import" href="src/code-jsdisplay.html" />
+	<style>
+		html,body { height: 100%; margin: 0px; padding: 0px; },
+		table,td { border-collapse:collapse;border:1px solid grey;padding:2px;},
+	</style>
+	
+	<!-- test data -->
+	<script src="layout-data.js"></script>
 </head>
 <body style='margin:30px;height:100%;'>
-	<!-- Using it... -->
+	<h1>mordrek-layout</h1>
+	<ul>
+		<li><a href='#dockpanel'>&lt;dock-panel&gt;</a></li>
+	</ul>
 
 	<!-- DockPanel -->
-	<h1>&lt;dock-panel&gt;</h1>
-	<h2>Docking Top, Left, Bottom, Right, Fill</h2>
-	<dock-panel style="width:25%;height:25%;background-color:grey;" >
-		<dock-panel dock="top" 		size="80px" 	style="background-color:#ff0000;">		Top</dock-panel>
-		<dock-panel dock="left" 	size="80px"		style="background-color:#ff4400;">	Left</dock-panel>
-		<dock-panel dock="bottom" 	size="20%"		style="background-color:#ff8800;">	Bottom</dock-panel>
-		<dock-panel dock="right" 	size="20%"		style="background-color:#ffbb00;">		Right</dock-panel>
-		<dock-panel dock="fill" 					style="background-color:#ffdd00;">	Fill</dock-panel>
-		
-	</dock-panel>
+	<a id='dockpanel' />
+	<h2>&lt;dock-panel&gt;</h2>
+	<h3>Attributes</h3>
+	<table>
+		<tr><td>dock (optional)</td><td>left,right,top,bottom,fill</td><td>What direction to dock the panel. A panel without any dock acts as root container</td></tr>
+		<tr><td>size (optional)</td><td>Size in px or % (12%, 23px)</td><td>Size of the panel in the docking direction.</td></tr>
+	</table>
+	<h3>Usage</h3>
+	<span>
+	A <i>&lt;dock-panel&gt;</i> without dock attribute acts as the root container and doesn't need any attributes.<br/>
+	Place <i>&lt;dock-panel&gt;</i> inside any <i>&lt;dock-panel&gt;</i> to dock the panel in the direction given by the attribute <i>dock</i>
+	</span>
+	<h3>Docking Top, Left, Bottom, Right, Fill</h3>
+	<dropdown-control data="testdata.dockpanel" onchange="dockpaneldisplay.code=this.value;"></dropdown-control>
+	<code-jsdisplay id='dockpaneldisplay'>Select demo in the combo box above</code-jsdisplay>
+
+	<code-control>
+	Here be code2
+	</code-control>
+	<table>
+		<tr>
+	
 	<h2>Docking Top, Left, Bottom, Right, Fill, with the same procedure inside the fill</h2>
 	<dock-panel style="width:45%;height:40%;background-color:grey;" >
 		<dock-panel dock="top" 		size="80px" 	style="background-color:#ff0000;">		Top</dock-panel>
