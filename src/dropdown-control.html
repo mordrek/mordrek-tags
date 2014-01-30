@@ -34,14 +34,14 @@ xtag.register('dropdown-control',
 		},
 	methods:
 		{
-		doonchange : function()
+		doonchange : function(e)
 			{
-			if(this.parentNode._change)
+			if(this._change)
 				{
-				this.parentNode.value = this.value;
-				this.parentNode._change();
+				this.value = e.value;
+				this._change();
 				}
-			else alert(this.parentNode._change);
+			else alert("!?");
 			},
 		update: function()
 			{
@@ -52,9 +52,9 @@ xtag.register('dropdown-control',
 			if(typeof d === 'string')
 				d = eval(d);
 
-			var s = "<select ";
+			var s = "<select onchange='this.parentNode.doonchange(this);' onload='onchange();' ";
 			s = s+">";
-			var index=0;
+			var index=0; var selectedValue;
 			for(var i =0; i < d.length; i++)
 				{
 					var di = d[i]; 
@@ -63,18 +63,24 @@ xtag.register('dropdown-control',
 					   {
 					   s = s+"selected";
 					   index = i;
+					   selectedValue = di.value.replace(/'/g, "\'");
 					   }
 					s = s+" value='"+
 						di.value.replace(/'/g, "\'")+"'>"+di.name+"</option>";
 				}
 			s = s+"</select>";
 			this.innerHTML = s;
-			var l=this.querySelectorAll('select');
-			for(var i=0; i < l.length;i++)
-				{
-				l[i].onchange = this.doonchange;
-				l[i].selectedIndex = index;
-				}
+			this.value = selectedValue;
+			var that=this;
+			setTimeout(function(){that._change();},0);
+//			var l=this.querySelectorAll('select');
+//			for(var i=0; i < l.length;i++)
+//				{
+//					this.value = l[i].value;
+//					this._change();
+//				}
+			
+			
 			}
 		}
 	});
