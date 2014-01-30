@@ -1,5 +1,5 @@
 <script>
-xtag.register('code-jsdisplay', 
+xtag.register('code-htmldisplay', 
 	{
 	extends: 'table',
 	accessors:
@@ -37,7 +37,7 @@ xtag.register('code-jsdisplay',
 			},
 		attributeChanged: function()
 			{
-//				var c = this.code.replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;");//.replace(/\n/g, "<br />");
+				//var c = this.code.replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;");//.replace(/\n/g, "<br />");
 				this._area.value = this.code;
 				this._span.innerHTML = this.code;
 			}

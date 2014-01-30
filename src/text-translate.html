@@ -12,8 +12,8 @@ xtag.register('text-translate',
 		{
 		created: function() 
 			{
-				this.tags = this.tags||"['span']";
-				this.params = this.params||"['innerText']";
+				this.tags = this.tags||("['span']");
+				this.params = this.params||("['innerText']");
 				this.update();
 			},
 		attributeChanged: function()
@@ -33,7 +33,7 @@ xtag.register('text-translate',
 					if(d != this._d)
 						this.map = eval(d); 
 					this._d = d;
-					var m = this.map;
+					var m = this.map; 
 					var tagarr = eval(this.tags); 
 					for(var e = 0; e < tagarr.length;e++)
 					{

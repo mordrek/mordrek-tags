@@ -38,7 +38,7 @@ xtag.register('dropdown-control',
 			{
 			if(this._change)
 				{
-				this.value = e.value;
+				this.value = e.value.replace(/&apos;/g, "\'").replace(/&quot;/g, "\"");
 				this._change();
 				}
 			else alert("!?");
@@ -59,18 +59,18 @@ xtag.register('dropdown-control',
 				{
 					var di = d[i]; 
 					s = s+"<option ";
+					var val=di.value.replace(/'/g, "&apos;").replace(/"/g, "&quot;")
 					if(di.selected)
 					   {
 					   s = s+"selected";
 					   index = i;
-					   selectedValue = di.value.replace(/'/g, "\'");
+					   selectedValue = val;
 					   }
-					s = s+" value='"+
-						di.value.replace(/'/g, "\'")+"'>"+di.name+"</option>";
+					s = s+" value='"+val+"'>"+di.name+"</option>";
 				}
 			s = s+"</select>";
 			this.innerHTML = s;
-			this.value = selectedValue;
+			this.value = selectedValue.replace(/&apos;/g, "\'").replace(/&quot;/g, "\"");
 			var that=this;
 			setTimeout(function(){that._change();},0);
 //			var l=this.querySelectorAll('select');

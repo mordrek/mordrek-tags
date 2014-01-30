@@ -9,32 +9,55 @@
 	
 	<!-- Importing Custom Elements -->
 	<link rel="import" href="src/text-translate.html">
+	
+	<!-- flair -->
+	<link rel="import" href="src/dropdown-control.html" />
+	<link rel="import" href="src/code-control.html" />
+	<link rel="import" href="src/code-htmldisplay.html" />
+	<style>
+		html,body { height: 100%; margin: 0px; padding: 0px; },
+		table,td { border-collapse:collapse;border:1px solid grey;padding:2px;},
+	</style>
+	
+	<!-- test data -->
+	<script src="util-data.js"></script>
 </head>
 <body>
-	<h1> Localization using &lt;text-translate&gt;</h1>
-	<!-- Declaring dictionary (unless loading from URL) -->
-	<script>
-	lang_en = 
+	<h1>mordrek-util</h1>
+	<ul>
+		<li><a href='#texttranslate'>&lt;text-translate&gt;</a></li>
+	</ul>
+	
+	<!-- text-translate -->
+	<a id='texttranslate' />
+	<h2> Localization using &lt;text-translate&gt;</h2>
+	<h3>Attributes</h3>
+	<table>
+		<tr><td>dictionary</td><td>JS object containing translations</td><td>lang_en = 
 		{
 			"title"				:"Hello world",
 			"welcome_message" 	: "Welcome"
-		}
-	lang_sv = 
-		{
-			"title"				:"Hej värld",
-			"welcome_message" 	: "Välkommen"
-		}
-	
-	</script>
+		}</td></tr>
+		<tr><td>tags (optional)</td><td>Javascript list of strings</td><td>Each item in the list corresponds to a tag that is targeted by the translation</td></tr>
+		<tr><td>params (optional)</td><td>Javascript list of strings</td><td>Each item in the list corresponds to an attribute on the tags that is targeted by the translation</td></tr>
+	</table>
+	<h3>Usage</h3>
+	<span>
+	Place the <i>&lt;text-translate&gt;</i> around tags that you want to be translated using a specific dictionary.<br/>
+	Change dictionary using javascript
+	</span>
 
-	<!-- Using Custom Elements -->
-	<text-translate id='intro' dictionary="lang_en">
-			<h1><span>title</span></h1>
-			<span>welcome_message</span>
-			<span>text without valid key</span>
-	</text-translate>
-	<br/><br/><br/>
-	<button onclick="intro.dictionary='lang_sv';">Click for swedish</button>
-	<button onclick="intro.dictionary='lang_en';">Click for english</button>
+	<h3>Translation example</h3>
+	<script> 
+	lang_en = { "title"				:"Hello world",
+				"welcome_message" 	: "Welcome"	};
+	lang_sv = { "title"				:"Hej värld",
+				"welcome_message" 	: "Välkommen"};
+	</script>
+	<dropdown-control data="testdata.texttranslate" onchange="dockpaneldisplay.code=this.value;"></dropdown-control>
+	<code-htmldisplay id='dockpaneldisplay'>Select demo in the combo box above</code-htmldisplay>
+
+	
+	
 </body>
 </html>
