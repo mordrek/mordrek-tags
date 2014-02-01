@@ -8,7 +8,7 @@
 	<script src="x-tag-components.min.js"></script>
 	
 	<!-- Importing Custom Elements -->
-	<link rel="import" href="src/text-translate.html">
+	<link rel="import" href="src/mordrek-util.html">
 	
 	<!-- flair -->
 	<link rel="import" href="src/dropdown-control.html" />
@@ -26,6 +26,7 @@
 	<h1>mordrek-util</h1>
 	<ul>
 		<li><a href='#texttranslate'>&lt;text-translate&gt;</a></li>
+		<li><a href='#xmldata'>&lt;xml-data&gt;</a></li>
 	</ul>
 	
 	<!-- text-translate -->
@@ -54,10 +55,23 @@
 	lang_sv = { "title"				:"Hej värld",
 				"welcome_message" 	: "Välkommen"};
 	</script>
-	<dropdown-control data="testdata.texttranslate" onchange="dockpaneldisplay.code=this.value;"></dropdown-control>
-	<code-htmldisplay id='dockpaneldisplay'>Select demo in the combo box above</code-htmldisplay>
+	<dropdown-control data="testdata.texttranslate" onchange="texttranslatepanel.code=this.value;"></dropdown-control>
+	<code-htmldisplay id='texttranslatepanel'>Select demo in the combo box above</code-htmldisplay>
 
+
+	<!-- xml-data -->
+	<a id='xmldata' />
+	<h2>Binding using &lt;xml-data&gt;</h2>
+	<h3>Attributes</h3>
 	
-	
+	<h3>Usage</h3>
+	<span>
+	 
+	</span>
+
+	<h3>Example</h3>
+	<dropdown-control data="testdata.xmldata" onchange="xmldatapanel.code=this.value;"></dropdown-control>
+	<code-htmldisplay id='xmldatapanel'>Select demo in the combo box above</code-htmldisplay>
+
 </body>
 </html>

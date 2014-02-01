@@ -1,0 +1,157 @@
+<script>
+xtag.register('xml-data', 
+	{
+	extends: 'div',
+	accessors:
+		{
+		datafile : { attribute: { set : function(){this.load(this,this.onLoad,this.datafile);} }},
+		data : { attribute: { set : function(){this.onData();} }},
+		context : { attribute: { set : function(){this.onContext();}}},
+		template : { attribute: {}},
+		},
+	lifecycle: 
+		{
+		created: function() 
+			{
+				this.templateObject = this;
+				if(this.datafile)
+					this.load(this,this.onLoad,this.datafile);	
+				else if(this.data)
+					this.onData();
+				else if(this.context)
+					this.onContext();
+			},
+		attributeChanged: function()
+			{
+				
+			}
+		},
+	methods: 
+		{
+		onContext : function()
+		{
+			
+		},
+		onLoad : function(obj,datastring)
+		{
+			obj.data = datastring;
+			obj.onData();
+		},
+		onData : function()
+		{
+			this.update(this,this.stringToXML(this.data));
+		},
+		alterValue : function(str, xmldoc)
+		{
+			var res=null;
+			while(true)
+			{
+			var index = str.search("{{.*}}");
+			if(index != -1)
+				{
+					var indexEnd = str.substr(index).search("}}");
+					var param = str.substr(index+2,indexEnd-2);
+					//console.log(str+":"+index+":"+indexEnd+":"+param);
+					var rep = document.evaluate(param, xmldoc, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null );
+					//console.log("evaluate "+param+" on the  doc "+xmldoc+" gives "+rep);
+					str = str.replace("{{"+param+"}}",rep.singleNodeValue.textContent );
+					res = str;
+				}
+			else 
+				return res;
+			}				
+			return null;
+		},
+		update : function(node,xmldoc)
+		 {
+			// Look through all attributes
+			//console.log("+NODE "+node.tagName);
+			var dic=[];
+			if(node.attributes!=undefined)
+			{
+			for(var i = 0; i <node.attributes.length;i++)
+			{
+				var attr = node.attributes[i];
+				//console.log("ATTR "+attr.name+" = "+attr.value);
+				if(attr.value!=null && attr.value != undefined)
+				{
+				dic[attr.name]=attr;
+				var newVal = this.alterValue(attr.value, xmldoc);
+				if(newVal!=null)
+					attr.value = newVal;
+				}
+			}
+			for(var i = 0; i <node.attributes.length;i++)
+			{
+				var attr = node.attributes[i];
+				
+				if(attr.value!=null && attr.value != undefined && attr.name != null)
+				{
+				
+				 var xi = attr.name.indexOf("_xml");
+				 if(xi!= -1)
+				 {
+				 
+					var orgAttrName = attr.name.substr(0,xi); 
+					//console.log("_xml as postfix on "+orgAttrName+" using shadow value "+attr.value);
+					var orgAttr = dic[orgAttrName];
+					orgAttr.value = attr.value;
+				 }
+				}
+			}
+			}
+			
+			var childCount=0;
+			if(node.childNodes!=undefined)
+			{
+			
+			// Look through children
+			for (var i = 0; i < node.childNodes.length; i++) {
+			var n=node.childNodes[i];
+			if(n.tagName!=null)
+				{
+				this.update(n,xmldoc);
+				childCount++;
+				}
+			}
+			}
+			if(childCount==0)
+			{
+			//console.log("INNER:"+node.innerHTML);
+				var newVal = this.alterValue(node.innerHTML, xmldoc);
+				if(newVal!=null)
+					node.innerHTML = newVal;
+			}
+			console.log("-");
+		 },
+	    stringToXML : function(oString) {
+		 //code for IE
+		 if (window.ActiveXObject) { 
+		 var oXML = new ActiveXObject("Microsoft.XMLDOM"); oXML.loadXML(oString);
+		 return oXML;
+		 }
+		 // code for Chrome, Safari, Firefox, Opera, etc. 
+		 else {
+		 return (new DOMParser()).parseFromString(oString, "text/xml");
+		 }
+		},
+		load : function(callbackObject,callback,url)
+		{
+		
+			var txtFile = new XMLHttpRequest();
+			txtFile.open("GET", url, true);
+			txtFile.onreadystatechange = function() {
+			  if (txtFile.readyState === 4) {  // Makes sure the document is ready to parse.
+				if (txtFile.status === 200) {  // Makes sure it's found the file.
+				  callback(callbackObject,txtFile.responseText); 
+				}
+			  }
+			}
+			txtFile.send(null);
+		}
+		
+		}
+	});
+
+		
+	</script>
