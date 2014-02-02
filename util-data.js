@@ -1,41 +1,29 @@
 testdata =
 {
-	texttranslate :
-	[
-		 
-		{
-			name : "Standard translation",
-			selected : true,
-			value : '\
-<!-- The following is already declared on this page:\r\n\
-<script>\r\n\
-lang_en = { "title"				:"Hello world",\r\n\
-			"welcome_message" 	: "Welcome"	};\r\n\
-lang_sv = { "title"				:"Hej värld",\r\n\
-			"welcome_message" 	: "Välkommen"};\r\n\
-</script>-->\r\n\
-<text-translate id="intro" dictionary="lang_en">\r\n\
-		<h1><span>title</span></h1>\r\n\
-		<span>welcome_message</span>\r\n\
-		<span>text without valid key</span>\r\n\
-</text-translate><br/>\r\n\
-<button onclick="intro.dictionary=\'lang_sv\';">Click for swedish</button>\r\n\
-<button onclick="intro.dictionary=\'lang_en\';">Click for english</button>\r\n\
-'
-		}
-	],
+
 	xmldata : 
 	[
 		{
 			name : "Direct data setting from file",
 			selected : true,
 			value : '\
-<!-- Double brackets contains the xpath acting on the data -->\r\n\
+<!-- Basic form is {{xml:XPATH}} acting on the datafile -->\r\n\
 <xml-data datafile="util-data.xml">\r\n\
-	<span>Some text with {{./data/text/text2}}</span>\r\n\
+	<span>This page says {{xml:./data/text/hello}}</span>\r\n\
 </xml-data>\r\n\
 '
 		},
+		{
+			name : "Swapping data source (for example language)",
+			selected : false,
+			value : '\
+<xml-data id="data" datafile="util-data.xml">\r\n\
+	<span>This page says {{xml:./data/text/hello}}</span>\r\n\
+</xml-data><br/>\r\n\
+<button onclick="data.datafile=\'util-data-se.xml\';">Click for swedish</button>\r\n\
+<button onclick="data.datafile=\'util-data.xml\';">Click for english</button>\r\n\
+'
+		},		
 		{
 			name : "Direct data setting from data",
 			selected : false,
@@ -48,32 +36,65 @@ lang_sv = { "title"				:"Hej värld",\r\n\
 			<text2>This is text2</text2>\r\n\
 		</text>\r\n\
 	</data>">\r\n\
-	<span>Some text with {{./data/text/text2}}</span>\r\n\
+	<span>Here we display: {{xml:./data/text/text2}}</span>\r\n\
 </xml-data>\r\n\
 ',
 		},
 		{
+			name : "Nested binding",
+			selected : false,
+			value : '\
+<!-- Nested binding is done from inside and out -->\r\n\
+<xml-data datafile="util-data.xml">\r\n\
+	<span>This page says {{xml:./data/text/{{xml:./data/text/link}}}}</span>\r\n\
+</xml-data>\r\n\
+'
+		},
+
+		{
 			name : "Setting data with default value",
 			selected : false,
 			value : '\
-<!-- Any attribute that has a "shadow"-value ending in _xml gets changed -->\r\n\
+<!-- Any attribute that has a "shadow"-value ending in _shadow gets changed -->\r\n\
 <!-- while still having a nice default value when no data or datafile is set -->\r\n\
 <xml-data datafile="util-data.xml">\r\n\
 	<img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSYNKCLMx3l-w-vaVaLkVe3il2eKuwY9qnrDMSWhcFtAcQ4eOTrdBZzjdNB" \r\n\
-	     src_xml="{{./data/img/img1}}"></span>\r\n\
+	     src_shadow="{{xml:./data/img/img1}}"></span>\r\n\
 </xml-data>\r\n\
 '
 		},
 		{
-			name : "Using template and context path",
+			name : "Setting data with single context",
+			selected : false,
+			value : '\
+<!-- The context acts is an xpath to the node in the xml used as starting point -->\r\n\
+<xml-data datafile="util-data.xml" context="./data/text">\r\n\
+	<span>This page says {{xml:./hello}}</span>\r\n\
+</xml-data>\r\n\
+'
+		},
+		{
+			name : "Setting data with multiple contexts",
+			selected : false,
+			value : '\
+<!-- If the context finds many elements, these are iterated through and the content is repeated -->\r\n\
+<!-- Special tokens #index and #length is added to help the iteration handling -->\r\n\
+<xml-data datafile="util-data.xml" context="./data/text/*">\r\n\
+	<span>This page ({{xml:#index}}/{{xml:#length}}) says {{xml:.}}</span><br/>\r\n\
+</xml-data>\r\n\
+'
+		},
+		{
+			name : "Using template and multiple contexts",
 			selected : false,
 			value : '\
 <!-- Templates may be used instead of sub-tags -->\r\n\
 <!-- The context is iterated through, multiplying the acting template -->\r\n\
-<xml-data datafile="util-data.xml" context="/data/text/*" template="templateId" />\r\n\
+<!-- Special tokens #index and #length is added to help the iteration handling -->\r\n\
 <template id="templateId">\r\n\
-	<span>{{./}}</span>\r\n\
+	<span>This page ({{xml:#index}}/{{xml:#length}}) says {{xml:.}}</span><br/>\r\n\
 </template>\r\n\
+<xml-data datafile="util-data.xml" context="/data/text/*" template="templateId" ></xml-data>\r\n\
 			'
 		},
 	]

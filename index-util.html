@@ -25,40 +25,9 @@
 <body>
 	<h1>mordrek-util</h1>
 	<ul>
-		<li><a href='#texttranslate'>&lt;text-translate&gt;</a></li>
 		<li><a href='#xmldata'>&lt;xml-data&gt;</a></li>
 	</ul>
 	
-	<!-- text-translate -->
-	<a id='texttranslate' />
-	<h2> Localization using &lt;text-translate&gt;</h2>
-	<h3>Attributes</h3>
-	<table>
-		<tr><td>dictionary</td><td>JS object containing translations</td><td>lang_en = 
-		{
-			"title"				:"Hello world",
-			"welcome_message" 	: "Welcome"
-		}</td></tr>
-		<tr><td>tags (optional)</td><td>Javascript list of strings</td><td>Each item in the list corresponds to a tag that is targeted by the translation</td></tr>
-		<tr><td>params (optional)</td><td>Javascript list of strings</td><td>Each item in the list corresponds to an attribute on the tags that is targeted by the translation</td></tr>
-	</table>
-	<h3>Usage</h3>
-	<span>
-	Place the <i>&lt;text-translate&gt;</i> around tags that you want to be translated using a specific dictionary.<br/>
-	Change dictionary using javascript
-	</span>
-
-	<h3>Translation example</h3>
-	<script> 
-	lang_en = { "title"				:"Hello world",
-				"welcome_message" 	: "Welcome"	};
-	lang_sv = { "title"				:"Hej värld",
-				"welcome_message" 	: "Välkommen"};
-	</script>
-	<dropdown-control data="testdata.texttranslate" onchange="texttranslatepanel.code=this.value;"></dropdown-control>
-	<code-htmldisplay id='texttranslatepanel'>Select demo in the combo box above</code-htmldisplay>
-
-
 	<!-- xml-data -->
 	<a id='xmldata' />
 	<h2>Binding using &lt;xml-data&gt;</h2>
@@ -68,7 +37,7 @@
 	<span>
 	 
 	</span>
-
+ 
 	<h3>Example</h3>
 	<dropdown-control data="testdata.xmldata" onchange="xmldatapanel.code=this.value;"></dropdown-control>
 	<code-htmldisplay id='xmldatapanel'>Select demo in the combo box above</code-htmldisplay>
