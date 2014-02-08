@@ -1,15 +1,81 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="UTF-8">
-	<title>mordrek-tags</title>
-	<!-- flair -->
-	<style>html,body { height: 100%; margin: 0px; padding: 0px; }</style>
-</head>
-<body style='margin:30px;height:100%;'>
-<ul>
-	<li><a href='index-layout.html'>Layout tags</a></li>
-	<li><a href='index-util.html'>Util tags</a></li>
-</ul>
-</body>
+	<head>
+		<meta charset="UTF-8">
+		<title>mordrek-tags</title>
+		<!-- flair -->
+		<link rel="stylesheet" type="text/css" href="style.css" >
+		<script src="mordrek-tags/mordrek-tags.js"></script>	
+	</head> 
+	<body style='margin:30px;height:100%;'>
+		
+		<ul>
+			<data-bind datafile='test-data.js' context='*'>
+				<li><a href='#{{id}}'>{{title}}</a></li>
+			</data-bind>
+		</ul>
+
+		<data-bind tag='main' datafile='test-data.js'  context='*'>
+			<a id='{{main:id}}'></a>
+			<h1>{{main:title}}</h1>
+			<h2>Introduction</h2>
+			<span>{{main:intro}}</span>
+			<h2>Attributes</h2>
+			<h2>Usage</h2>
+			<span>{{main:usage}}</span>
+			<h2>Examples:</h2>
+			<select id='sampleSelect{{main:id}}' onchange='editArea{{main:id}}.value=this.value;editResult{{main:id}}.innerHTML=this.value;'>
+			</select>
+			<data-bind tag="item" target='sampleSelect{{main:id}}' datafile='test-data.js' context='{{main:id}}.samples.*'>
+				<option value="{{item:sample}}">{{item:title}}</option>
+			</data-bind>
+			<table>
+				<tr><th>HTML fiddle</th><th>HTML result</th></tr>
+				<tr>
+					<td style='width:50%;'>
+						<textarea rows="7" cols="80" id='editArea{{main:id}}'  onkeyup='editResult{{main:id}}.innerHTML=this.value;' ></textarea>
+					</td>
+				   <td id="editResult{{main:id}}"></td>
+				</tr>
+			</table>
+		</data-bind>
+
+
+		<!--
+		
+
+	
+		<data-bind datafile="sampledata/sample-data.json"  context="$.text.*">
+			<span>Binding with context ({{#index}}/{{#length}}): {{.}}</span><br/>
+		</data-bind>
+		<br/>
+		
+		<data-bind datafile="sampledata/sample-data.json" template='myTemplate'  context="$.text.*"></data-bind>
+		<template id='myTemplate'>
+			<span>Binding with context and template ({{#index}}/{{#length}}): {{.}}</span><br/>
+		</template>
+		<br/>
+		
+		<data-bind datafile="sampledata/sample-data.json" tag="one">
+			<data-bind datafile="sampledata/sample-data.json" context="$.text" tag="two">
+				<span>Binding with context: {{two:hello}} (instead of {{one:$.text.hello}}) </span>
+			</data-bind>
+		</data-bind>
+		<br/>
+		
+		<data-bind datafile="sampledata/sample-data.json">
+			<span>Binding a shadow value to an attribute</span><br/>
+			<img src='sampledata/yawning-cat.jpg'
+				 src_shadow='sampledata/{{img.img1}}' />
+				 
+		</data-bind>
+		<br/>
+		
+		<data-bind>
+			<span>Binding javascript results: {{=new Date().toLocaleString();}}</span>
+		</data-bind>
+		<br/>
+		-->
+		<br/>
+	</body>
 </html>

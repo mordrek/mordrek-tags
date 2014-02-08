@@ -1,0 +1,11 @@
+{
+text:{
+	hello:"Hej",
+	world:"Värld",
+	link:"hello"
+	},
+img:{
+	img1:"a-sleeping-cat.jpg"
+	}
+}
+ 
